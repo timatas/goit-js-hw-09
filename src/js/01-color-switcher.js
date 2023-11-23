@@ -1,16 +1,22 @@
-const startBtn = document.querySelector('.js-start');
-const stopBtn = document.querySelector('.js-stop');
+const startBtn = document.querySelector('button[data-start]');
+const colorBody = document.querySelector('body');
+const stopBtn = document.querySelector('button[data-stop]');
+stopBtn.setAttribute('disabled', true);
 let timerId = null;
 
-startBtn.addEventListener('click', () => {
+startBtn.addEventListener('click', onClickStart);
+function onClickStart(evt) {
   timerId = setInterval(() => {
-    console.log(`I love async JS!  ${Math.random()}`);
+    colorBody.style.backgroundColor = `${getRandomHexColor()}`;
+    startBtn.setAttribute('disabled', true);
+    stopBtn.disabled = false;
   }, 1000);
-});
+}
 
 stopBtn.addEventListener('click', () => {
   clearInterval(timerId);
-  console.log(`Interval with id ${timerId} has stopped!`);
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
 });
 
 function getRandomHexColor() {
